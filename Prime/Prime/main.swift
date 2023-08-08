@@ -12,19 +12,18 @@ import Foundation
 class PrintPrimes {
     static func main() {
         
-        let primes = self.findPrimeNumbers()
+        let primes = self.findPrimeNumbers(max: 1000)
         self.printPrimeNumbers(primes)
     }
     
-    static func findPrimeNumbers() -> [Int] {
-        let max = 1000
+    static func findPrimeNumbers(max: Int) -> [Int] {
         var primes: [Int] = Array<Int>(repeating: 0, count: max + 1)
         var candidate: Int = 0
         var numberOfPrimes: Int = 0
         var isPrime: Bool = false
         var ord: Int = 0
         var square: Int = 0
-        var n: Int = 0
+        var n: Int = 0 
         let ORDMAX = 30
         var mult: [Int] = Array<Int>(repeating: 0, count: ORDMAX + 1)
         
