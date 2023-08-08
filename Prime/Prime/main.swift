@@ -14,7 +14,6 @@ class PrimeFinders {
     var ord = 0
     var square = 9
     let ORDMAX = 30
-    var candidate = 1
     var mult: [Int] = []
     
     private func isPrime(_ candidate: Int) -> Bool {
@@ -42,11 +41,11 @@ class PrimeFinders {
         self.ord = 2
         self.square = 9
         self.mult = Array<Int>(repeating: 0, count: ORDMAX + 1)
-        self.candidate = 1
     }
     
     func find(max: Int) -> [Int] {
         self.prepare()
+        var candidate = 1
         
         while primes.count - 1 < max {
             candidate += 2
@@ -59,19 +58,23 @@ class PrimeFinders {
 }
 
 class NumberPrinters {
+    let rowsPerPage: Int
+    let columnsPerPage: Int
     
-    private func printHeader(primesCount: Int, pageNumber: Int) {
+    init(rowsPerPage: Int, columnsPerPage: Int) {
+        self.rowsPerPage = rowsPerPage
+        self.columnsPerPage = columnsPerPage
+    }
+    
+    private func printPageHeader(primesCount: Int, pageNumber: Int) {
         print("The First \(primesCount) Prime Numbers --- page \(pageNumber)")
     }
     
-    let RR = 50
-    let CC = 4
-    
-    private func printBody(primes: [Int], pageOffset: Int, primesCount: Int) {
-        for rowOffset in pageOffset..<(pageOffset + RR) {
-            for c in 0..<CC {
-                if rowOffset + c * RR <= primesCount {
-                    let num = String(format: "%10d", primes[rowOffset + c * RR])
+    private func printPageBody(primes: [Int], pageOffset: Int, primesCount: Int) {
+        for rowOffset in pageOffset..<(pageOffset + rowsPerPage) {
+            for c in 0..<columnsPerPage {
+                if rowOffset + c * rowsPerPage <= primesCount {
+                    let num = String(format: "%10d", primes[rowOffset + c * rowsPerPage])
                     print("\(num)", terminator: "")
                 }
             }
@@ -85,11 +88,11 @@ class NumberPrinters {
         var pageOffset = 1
 
         while pageOffset <= primesCount {
-            printHeader(primesCount: primesCount, pageNumber: pageNumber)
-            printBody(primes: primes, pageOffset: pageOffset, primesCount: primesCount)
+            printPageHeader(primesCount: primesCount, pageNumber: pageNumber)
+            printPageBody(primes: primes, pageOffset: pageOffset, primesCount: primesCount)
             
             pageNumber = pageNumber + 1
-            pageOffset = pageOffset + RR * CC
+            pageOffset = pageOffset + rowsPerPage * columnsPerPage
         }
     }
 }
@@ -97,7 +100,9 @@ class NumberPrinters {
 class PrintPrimes {
     static func main() {
         let primes = PrimeFinders().find(max: 1000)
-        let printers = NumberPrinters()
+        assert(primes.count == 1000)
+        assert(primes.last! == 7978)
+        let printers = NumberPrinters(rowsPerPage: 50, columnsPerPage: 4)
         printers.printNumbers(primes)
     }
 }
