@@ -10,52 +10,50 @@ import Foundation
 
 
 class PrimeFinders {
-    func find(max: Int) -> [Int] {
-        var primes: [Int] = Array<Int>(repeating: 0, count: max + 1)
-        var candidate: Int = 0
-        var numberOfPrimes: Int = 0
-        var isPrime: Bool = false
-        var ord: Int = 0
-        var square: Int = 0
-        var n: Int = 0
-        let ORDMAX = 30
-        var mult: [Int] = Array<Int>(repeating: 0, count: ORDMAX + 1)
-        
-        // 후보자
-        candidate = 1
-        // 찾은 소수 개수
-        numberOfPrimes = 1
-        // 첫번째 소수
-        primes[1] = 2
-        // ??
-        // ord의 역할은 최대 공약수를 ㅡ이미 ?
-        ord = 2
-        // 제곱
-        square = 9
-        while numberOfPrimes < max {
-            repeat {
-                candidate = candidate + 2
-                if candidate == square {
-                    ord = ord + 1
-                    square = primes[ord] * primes[ord]
-                    mult[ord - 1] = candidate
-                }
-                n = 2
-                isPrime = true
-                while n < ord && isPrime {
-                    while mult[n] < candidate {
-                        mult[n] = mult[n] + primes[n] + primes[n]
-                    }
-                    if mult[n] == candidate {
-                        isPrime = false
-                    }
-                    n = n + 1
-                }
-            } while !isPrime
-            numberOfPrimes = numberOfPrimes + 1
-            primes[numberOfPrimes] = candidate
+    var primes: [Int] = []
+    var ord = 0
+    var square = 9
+    let ORDMAX = 30
+    var candidate = 1
+    var mult: [Int] = []
+    
+    private func isPrime(_ candidate: Int) -> Bool {
+        if candidate == self.square {
+            self.ord = self.ord + 1
+            self.square = self.primes[ord] * self.primes[ord]
+            self.mult[ord - 1] = candidate
         }
         
+        var n = 2
+        while n < ord {
+            while mult[n] < candidate {
+                mult[n] = mult[n] + primes[n] + primes[n]
+            }
+            if mult[n] == candidate {
+                return false
+            }
+            n = n + 1
+        }
+        return true
+    }
+    
+    private func prepare() {
+        self.primes = [0, 2]
+        self.ord = 2
+        self.square = 9
+        self.mult = Array<Int>(repeating: 0, count: ORDMAX + 1)
+        self.candidate = 1
+    }
+    
+    func find(max: Int) -> [Int] {
+        self.prepare()
+        
+        while primes.count - 1 < max {
+            candidate += 2
+            if self.isPrime(candidate) {
+                primes.append(candidate)
+            }
+        }
         return primes
     }
 }
