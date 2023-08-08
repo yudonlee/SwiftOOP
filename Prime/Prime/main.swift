@@ -10,28 +10,35 @@ import Foundation
 
 
 class PrintPrimes {
-    static let max = 1000
-    static let ORDMAX = 30
-    static var primes: [Int] = Array<Int>(repeating: 0, count: max + 1)
-    static var candidate: Int = 0
-    static var numberOfPrimes: Int = 0
-    static var isPrime: Bool = false
-    static var ord: Int = 0
-    static var square: Int = 0
-    static var n: Int = 0
-    static var mult: [Int] = Array<Int>(repeating: 0, count: ORDMAX + 1)
-    
     static func main() {
-        numberOfPrimes = 1
-        primes[1] = 2
-        ord = 2
-        square = 9
         
-        getPrimeNumbers()
-        printPrimeNumbers()
+        let primes = self.findPrimeNumbers()
+        self.printPrimeNumbers(primes)
     }
     
-    static func getPrimeNumbers() {
+    static func findPrimeNumbers() -> [Int] {
+        let max = 1000
+        var primes: [Int] = Array<Int>(repeating: 0, count: max + 1)
+        var candidate: Int = 0
+        var numberOfPrimes: Int = 0
+        var isPrime: Bool = false
+        var ord: Int = 0
+        var square: Int = 0
+        var n: Int = 0
+        let ORDMAX = 30
+        var mult: [Int] = Array<Int>(repeating: 0, count: ORDMAX + 1)
+        
+        // 후보자
+        candidate = 1
+        // 찾은 소수 개수
+        numberOfPrimes = 1
+        // 첫번째 소수
+        primes[1] = 2
+        // ??
+        // ord의 역할은 최대 공약수를 ㅡ이미 ?
+        ord = 2
+        // 제곱
+        square = 9
         while numberOfPrimes < max {
             repeat {
                 candidate = candidate + 2
@@ -55,11 +62,14 @@ class PrintPrimes {
             numberOfPrimes = numberOfPrimes + 1
             primes[numberOfPrimes] = candidate
         }
+        
+        return primes
     }
     
-    static func printPrimeNumbers() {
+    static func printPrimeNumbers(_ primes: [Int]) {
         let RR = 50
         let CC = 4
+        let max = 1000
         var pageNumber: Int = 0
         var pageOffset: Int = 0
 
