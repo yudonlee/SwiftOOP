@@ -62,17 +62,15 @@ class NumberPrinters {
     func printNumbers(_ primes: [Int]) {
         let RR = 50
         let CC = 4
-        let max = 1000
-        var pageNumber: Int = 0
-        var pageOffset: Int = 0
+        let primesCount = primes.count - 1
+        var pageNumber = 1
+        var pageOffset = 1
 
-        pageNumber = 1
-        pageOffset = 1
-        while pageOffset <= max {
-            print("The First \(max) Prime Numbers --- page \(pageNumber)")
+        while pageOffset <= primesCount {
+            print("The First \(primesCount) Prime Numbers --- page \(pageNumber)")
             for rowOffset in pageOffset..<(pageOffset + RR) {
                 for c in 0..<CC {
-                    if rowOffset + c * RR <= max {
+                    if rowOffset + c * RR <= primesCount {
                         let num = String(format: "%10d", primes[rowOffset + c * RR])
                         print("\(num)", terminator: "")
                     }
