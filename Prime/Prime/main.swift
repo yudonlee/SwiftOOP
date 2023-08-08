@@ -16,6 +16,7 @@ class PrimeFinders {
     let ORDMAX = 30
     var mult: [Int] = []
     
+    // TODO: isPrime 함수 리팩토링
     private func isPrime(_ candidate: Int) -> Bool {
         if candidate == self.square {
             self.ord = self.ord + 1
