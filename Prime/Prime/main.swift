@@ -9,21 +9,15 @@
 import Foundation
 
 
-class PrintPrimes {
-    static func main() {
-        
-        let primes = self.findPrimeNumbers(max: 1000)
-        self.printPrimeNumbers(primes)
-    }
-    
-    static func findPrimeNumbers(max: Int) -> [Int] {
+class PrimeFinders {
+    func find(max: Int) -> [Int] {
         var primes: [Int] = Array<Int>(repeating: 0, count: max + 1)
         var candidate: Int = 0
         var numberOfPrimes: Int = 0
         var isPrime: Bool = false
         var ord: Int = 0
         var square: Int = 0
-        var n: Int = 0 
+        var n: Int = 0
         let ORDMAX = 30
         var mult: [Int] = Array<Int>(repeating: 0, count: ORDMAX + 1)
         
@@ -64,8 +58,10 @@ class PrintPrimes {
         
         return primes
     }
-    
-    static func printPrimeNumbers(_ primes: [Int]) {
+}
+
+class NumberPrinters {
+    func printNumbers(_ primes: [Int]) {
         let RR = 50
         let CC = 4
         let max = 1000
@@ -89,7 +85,14 @@ class PrintPrimes {
             pageOffset = pageOffset + RR * CC
         }
     }
+}
 
+class PrintPrimes {
+    static func main() {
+        let primes = PrimeFinders().find(max: 1000)
+        let printers = NumberPrinters()
+        printers.printNumbers(primes)
+    }
 }
 
 
