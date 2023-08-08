@@ -59,24 +59,35 @@ class PrimeFinders {
 }
 
 class NumberPrinters {
+    
+    private func printHeader(primesCount: Int, pageNumber: Int) {
+        print("The First \(primesCount) Prime Numbers --- page \(pageNumber)")
+    }
+    
+    let RR = 50
+    let CC = 4
+    
+    private func printBody(primes: [Int], pageOffset: Int, primesCount: Int) {
+        for rowOffset in pageOffset..<(pageOffset + RR) {
+            for c in 0..<CC {
+                if rowOffset + c * RR <= primesCount {
+                    let num = String(format: "%10d", primes[rowOffset + c * RR])
+                    print("\(num)", terminator: "")
+                }
+            }
+            print("")
+        }
+    }
+    
     func printNumbers(_ primes: [Int]) {
-        let RR = 50
-        let CC = 4
         let primesCount = primes.count - 1
         var pageNumber = 1
         var pageOffset = 1
 
         while pageOffset <= primesCount {
-            print("The First \(primesCount) Prime Numbers --- page \(pageNumber)")
-            for rowOffset in pageOffset..<(pageOffset + RR) {
-                for c in 0..<CC {
-                    if rowOffset + c * RR <= primesCount {
-                        let num = String(format: "%10d", primes[rowOffset + c * RR])
-                        print("\(num)", terminator: "")
-                    }
-                }
-                print("")
-            }
+            printHeader(primesCount: primesCount, pageNumber: pageNumber)
+            printBody(primes: primes, pageOffset: pageOffset, primesCount: primesCount)
+            
             pageNumber = pageNumber + 1
             pageOffset = pageOffset + RR * CC
         }
